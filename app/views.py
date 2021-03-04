@@ -19,7 +19,8 @@ def init(request):
 
 
 def query(request):
+    delimiter = request.GET.get("delimiter", ',')
     queryset = Address.objects.values("customer__name").annotate(
-        phones=StringAgg('phone', delimiter="'"),
+        phones=StringAgg('phone', delimiter),
     )
     return HttpResponse(queryset)
